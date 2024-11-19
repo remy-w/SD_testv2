@@ -1,0 +1,60 @@
+SELECT participants.id, participants.name, participants.name, medal
+FROM participants JOIN resultats ON pariticipant.id = resultats.attendee_id JOIN competitions ON resultats.event_id = competitions.id
+WHERE sport = "tir à l'arc 70m" AND medal is NOT NULL ;
+
+
+Epreuves
+
+{
+"id" : "NUMBER",
+"sport" : STRING,
+"pariticipants": [{ "id": "NUMBER", # tableau d'objet qui contient les différents participants à cette epreuve
+		    "name": "STRING",
+		    "country": "STRING",
+		    "results": [{ # tableau d'objet associé à un pariticipant qui recense les performances de l'athlète à cette épreuve.
+				"competitions": "STRING",
+				"classement": NUMBER
+				},]
+
+},]
+
+
+}
+
+
+J'ai décide de créer une unique collections épreuves car de mon point de vue tout peut etre stocké dans une collection en passant par des structures imbriquées.
+
+
+2 - db.epreuves.countDocuments()
+3- db.epreuves.findOne({sport: "tir à l'arc 70m"},{participant: 1})
+4- db.epreuves.findOne({sport: "tir à l'arc 70m"},{participant: 1}).length
+7- db.epreuves.deleteMany({})
+
+SQL vs NoSQL
+
+Expliquez les modifications qu'il aurait fallu effectuer sur les tables SQL et la procédure pour les appliquer. 
+Il aurait fallu créer un nouveau schéma de données s'il les champs n'avaient pas été crée dans la création initiale. Des outils ETL auraient permis de transiter les données de l'ancienne base à la nouvelle. des valeurs nulles auraient été renseignées par les champs sans informations (les données de l'ancien schéma)
+
+Expliquez le choix du type de données pour la description et donnez un exemple de syntaxe enrichie.
+Le choix de type de données est un type STRING dans un format de type Markdown qui garde la structure de la page web.
+
+Expliquez sous quel format il est possible d'enregistrer une image dans une base de données en vue de son affichage immédiat.
+Il est possible de stocker une image sous la forme d'une chaine de caractere via un langage comme Markdown qui est à balisage léger. De ce fait elle est directement intégrée à la page web / à la partition de la page. 
+
+
+Expliquez la procédure détaillée pour mettre à jour la base NoSQL pour intégrer les nouvelles données;
+Il est possible d'intégrer les données dans la base NoSQL avec la syntaxe : db.sport.insertMany([{cle: valeur, cle: valeur...},{cle: valeur, cle: valeur...}])
+
+
+NoSQL 
+
+Pour améliorer la capacité du système de base de données et faire face à une demande mondiale, plusieurs solutions peuvent être envisagées. Listez-les.
+Pour améliorer la capacité du système, il serait pertinent de déployer nos données sur des clusters de machine afin de les rendre davantage exploitable et disponible à la demande. Contrairement au SGBD relationnelle, c'est en ajoutant des ressources que l'on rend nos informations davantages exploitables
+
+Connaissances générales 
+
+Comment vérifier la validité d'un set de données en JSON? Il faut le passer à un validateur en l'occurrence https://jsonlint.com/
+Quel est le langage de programmation nativement utilisé dans le MongoShell ? Il s'agit du langage JavaScript
+Que signifie NoSQL ? Il veut dire Not Only SQL
+Que pourrait-on qualifier d'équivalent d'une table en NoSQL-MongoDB, que y enregistre-t-on ? Il s'agit d'une collection et on y enregistre des docuements
+Qu'est-ce le BSON, quel est sa différence avec le JSON ? BSON est l'abréviation de Binary JavaScript Object Notation. Sa différence réside dans la manière dont les informations sont enregistrées c'est à dire en format binaire en BSON contre un format textuel en JSON.
